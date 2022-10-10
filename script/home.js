@@ -154,27 +154,29 @@ $('.modal_close').addEventListener('click',()=>{
 
 })
 
+// local storage dan olish
 let obj=[];
 if(localStorage.getItem("bookmark")){
     obj=(JSON.parse(localStorage.getItem("bookmark")));
     Add();
 }
 
+// bookmark bosish
 $('.books').addEventListener('click',(e)=>{
     if(e.target.classList.contains("bookmarkAdd")){
         bookmarkAdd(e.target.dataset.item);
     }
 })
 
+// massivga qo'shish
 function bookmarkAdd(name){
-    // let countries= await fetch(`https://restcountries.com/v2/name/${name}`);
-    // let result=await countries.json();
     if(!(obj.includes(name))){
         obj.push(name);
         localStorage.setItem("bookmark",JSON.stringify(obj));
     }
     Add();
 }
+
 
 async function Add(){
     $('.bookmark').innerHTML="";
@@ -185,6 +187,7 @@ async function Add(){
 }
 }
 
+// bookmarkga qo'shish
 async function getD(name){
     let countries=await fetch(`https://restcountries.com/v2/name/${name}`);
     let result=await countries.json();
@@ -200,6 +203,7 @@ async function getD(name){
         $('.bookmark').appendChild(div);
 }
 
+// bookmarkdan o'chirish
 $('.bookmark').addEventListener('click',(e)=>{
     if(e.target.classList.contains("delete")){
         console.log(obj.findIndex((item)=>item==e.target.getAttribute("data-name")));
@@ -208,15 +212,15 @@ $('.bookmark').addEventListener('click',(e)=>{
     }
 })
 
-
+// kun-tun rejimi
 $('.bi-brightness-high-fill').addEventListener("click",()=>{
     if($('#logo').getAttribute('src')=='/img/Group 193 home.png'){
-    $('body').style.backgroundColor="rgb(71, 71, 71)";
-    $('body').style.color="white";
-    $('#logo').setAttribute('src','/img/Group 200.png');
-    $('.box-1').classList.remove("border-light");
-    $('.box-1').classList.add("border-dark");
-return 0;}
+        $('body').style.backgroundColor="rgb(71, 71, 71)";
+        $('body').style.color="white";
+        $('#logo').setAttribute('src','/img/Group 200.png');
+        $('.box-1').classList.remove("border-light");
+        $('.box-1').classList.add("border-dark");
+        return 0;}
     else{
         $('body').style.backgroundColor="white";
         $('body').style.color="black";
@@ -225,5 +229,4 @@ return 0;}
         $('.box-1').classList.add("border-light");
         return 0;
     }
-
 })
