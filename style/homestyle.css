@@ -7,12 +7,45 @@
 .header{
     height: 100px;
 }
-.card-text{
-    font-size: 15px;
+
+.light-dark{
+    background: none;
+    width: 23px;
 }
-.card-body{
-    height: 90px;
+.bookmarks{
 }
-.card-img-bottom{
-    height: 150px;
+.countries{
+    height: 400px;
+}
+.none{
+    width:0;
+}
+.activ{
+    background-color: #0d6efd;
+    color:white;
+}
+.books{
+    width: 910px;
+}
+.modals-content{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: rgba(201, 201, 201, 0.63);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: end;
+    align-items:top;
+    z-index: 1;
+}
+.modals{
+    width: 550px;
+    min-height: 100px;
+    background: white;
+    position: relative;
+}
+.close{
+    width: 35px;
+    height: 35px;
 }
