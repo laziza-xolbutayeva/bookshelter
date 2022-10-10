@@ -11,8 +11,7 @@
 .light-dark{
     background: none;
     width: 23px;
-}
-.bookmarks{
+    height: 23px;
 }
 .countries{
     height: 400px;
@@ -49,3 +48,4 @@
     width: 35px;
     height: 35px;
 }
+

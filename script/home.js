@@ -1,5 +1,6 @@
 'use strict'
 
+// localStora*ge.clear();
 // barcha data
 async function getUser(){
     const users=await fetch(`https://restcountries.com/v2/all`);
@@ -153,40 +154,76 @@ $('.modal_close').addEventListener('click',()=>{
 
 })
 
-const obj=[];
+let obj=[];
+if(localStorage.getItem("bookmark")){
+    obj=(JSON.parse(localStorage.getItem("bookmark")));
+    Add();
+}
+
 $('.books').addEventListener('click',(e)=>{
     if(e.target.classList.contains("bookmarkAdd")){
         bookmarkAdd(e.target.dataset.item);
     }
 })
 
-async function bookmarkAdd(name){
-    let countries= await fetch(`https://restcountries.com/v2/name/${name}`);
-    let result=await countries.json();
-    if(!(obj.includes(result[0]))){
-        obj.push(result[0]);
-        console.log(obj);
+function bookmarkAdd(name){
+    // let countries= await fetch(`https://restcountries.com/v2/name/${name}`);
+    // let result=await countries.json();
+    if(!(obj.includes(name))){
+        obj.push(name);
+        localStorage.setItem("bookmark",JSON.stringify(obj));
     }
     Add();
 }
 
-function Add(){
+async function Add(){
     $('.bookmark').innerHTML="";
     if(obj.length!=0){
-    obj.forEach((item,i)=>{
-        let div=createElements('div','d-flex bg-light py-2 rounded my-2',`
-        <div class="w-75">
-            <h4>${item.name}</h4>
-            <p>${item.subregion}</p>
-        </div>
-        <div class="pt-4">
-            <span><img src="/img/book-open 1.svg" alt=""></span>
-            <span><img src="/img/delete 1.svg" alt=""></span>
-        </div>`);
-        $('.bookmark').appendChild(div);
+    obj.forEach((item)=>{
+        getD(item);
     })
 }
 }
 
+async function getD(name){
+    let countries=await fetch(`https://restcountries.com/v2/name/${name}`);
+    let result=await countries.json();
+    let div=createElements('div','d-flex bg-light py-2 rounded my-2',`
+        <div class="w-75">
+            <h4>${result[0].name}</h4>
+            <p>${result[0].subregion}</p>
+        </div>
+        <div class="pt-4">
+            <span><img src="/img/book-open 1.svg" alt=""></span>
+            <span ><img src="/img/delete 1.svg" alt="delete" class="delete" data-name="${result[0].name}"></span>
+        </div>`);
+        $('.bookmark').appendChild(div);
+}
+
+$('.bookmark').addEventListener('click',(e)=>{
+    if(e.target.classList.contains("delete")){
+        console.log(obj.findIndex((item)=>item==e.target.getAttribute("data-name")));
+        obj.splice(obj.findIndex((item)=>item==e.target.getAttribute("data-name")),1);
+        Add();
+    }
+})
 
 
+$('.bi-brightness-high-fill').addEventListener("click",()=>{
+    if($('#logo').getAttribute('src')=='/img/Group 193 home.png'){
+    $('body').style.backgroundColor="rgb(71, 71, 71)";
+    $('body').style.color="white";
+    $('#logo').setAttribute('src','/img/Group 200.png');
+    $('.box-1').classList.remove("border-light");
+    $('.box-1').classList.add("border-dark");
+return 0;}
+    else{
+        $('body').style.backgroundColor="white";
+        $('body').style.color="black";
+        $('#logo').setAttribute('src','/img/Group 193 home.png');
+        $('.box-1').classList.remove("border-dark");
+        $('.box-1').classList.add("border-light");
+        return 0;
+    }
+
+})
